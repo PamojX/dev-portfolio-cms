@@ -10,7 +10,7 @@ Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion.
 ## Features
 
 - **Public Portfolio** — Home, Projects, Skills, About, Blog, Contact
-- **Admin Panel** — Password-protected CMS with sidebar navigation
+- **Admin Panel** — Password-protected CMS with hidden access URL (security by obscurity + password)
 - **GitHub Integration** — Auto-fetches your public repos, sorted by stars
 - **Blog System** — Create, edit, and delete posts with Markdown support
 - **Dark/Light Mode** — System detection + toggle + localStorage persistence
@@ -40,7 +40,10 @@ Edit `.env.local`:
 ```env
 ADMIN_PASSWORD=your_password
 GITHUB_USERNAME=your_github_username
+NEXT_PUBLIC_ADMIN_SECRET=your-secret-admin-path
 ```
+
+**Note:** The admin panel is accessible at `/{NEXT_PUBLIC_ADMIN_SECRET}` instead of `/admin` for security. Direct `/admin` access is blocked.
 
 ### 3. Customize Content
 
@@ -64,13 +67,13 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)  
-Admin panel: [http://localhost:3000/admin](http://localhost:3000/admin)
+Admin panel: `http://localhost:3000/{your-secret-path}` (uses the value from `.env.local`)
 
 ## Deploy to Vercel
 
 1. Push to GitHub
 2. Import project on [vercel.com](https://vercel.com)
-3. Add environment variables: `ADMIN_PASSWORD`, `GITHUB_USERNAME`
+3. Add environment variables: `ADMIN_PASSWORD`, `GITHUB_USERNAME`, `NEXT_PUBLIC_ADMIN_SECRET`
 4. Deploy — done!
 
 ## Project Structure
@@ -84,7 +87,6 @@ app/                    # Next.js App Router pages
   skills/               # Skills & technologies
   about/                # About with timeline
   contact/              # Contact & social links
-  special/              # 🤫 Hidden page
 components/             # Reusable UI components
 lib/                    # Utilities (GitHub API, JSON DB, auth)
 data/                   # JSON content files (your data lives here)
